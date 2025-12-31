@@ -1,0 +1,12 @@
+Django>=5.1
+fastapi
+pydantic
+uvicorn[standard]
+whitenoise
+psycopg[binary]
+gunicorn
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+Pillow
+pytz
