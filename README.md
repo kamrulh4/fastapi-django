@@ -1,76 +1,77 @@
-# FastAPI with Django ORM and Admin
+# FastAPI with Django ORM
 
 ## Overview
 
-This is a template repository for implementing the server using Django functionality for the DB area (admin, ORM) and FastAPI for the API area.
+This is a modern template repository for implementing a server using Django for the Admin and ORM (Async supported) and FastAPI for the API layer.
+
+**Tech Stack:**
+- **Python**: 3.13
+- **FastAPI**: Latest
+- **Django**: 5.x (Latest stable with Async Support)
+- **Database**: PostgreSQL 17 (Alpine)
+- **Containerization**: Docker & Docker Compose
 
 ## Prerequisites
 
-### Poetry
+- Docker
+- Docker Compose
 
-Dependency management for Python files is done using POETRY.
+## Development
 
-1. <https://python-poetry.org/docs/#installation>
-1. `python -m venv venv`
-1. `source venv/bin/activate`
-2. `pip install --upgrade pip` (if needed)
-3. `poetry install`
-
-### pre-commit (for developers)
-
-This tool defines commands to be executed before committing. It is already defined in `.pre-commit-config.yaml`, so you need to configure it in your environment. Please follow the steps below.
-
-1. <https://pre-commit.com/#installation>
-1. `pre-commit install`
-
-## Usage
-
-1. Clone this repository
+1. **Clone this repository**
 
    ```sh
-    git clone https://github.com/kathmandu777/fastapi-django-template.git
-    ```
+   git clone https://github.com/kathmandu777/fastapi-django-template.git
+   ```
 
-1. Create fastapi.env with reference to fastapi.env.tmpl
+2. **Create Environment File**
 
-1. Build
+   Create `fastapi/fastapi.env` by copying the template:
+   ```sh
+   cp fastapi/fastapi.env.tmpl fastapi/fastapi.env
+   ```
+   (Or manually create it based on `fastapi.env.tmpl`)
 
-    ```sh
-    docker-compose build
-    ```
+3. **Start the Application**
 
-1. Dependency install
+   Run with Docker Compose. This will build the images and start the services.
+   
+   > **Note:** The startup script automatically runs migrations and collects static files.
 
-    ```sh
-    docker-compose run --rm fastapi poetry install
-    ```
+   ```sh
+   docker-compose up --build
+   ```
 
-1. Setup Static Files
+   - **FastAPI Documentation**: http://localhost:8000/docs
+   - **Django Admin**: http://localhost:8001/admin
 
-    ```sh
-    docker-compose run --rm fastapi poetry run python manage.py collectstatic --noinput
-    ```
+## Management Commands
 
-1. Migrate
+To run management commands (like creating a superuser), you can use `docker-compose run`.
 
-    ```sh
-    docker-compose run --rm fastapi poetry run python manage.py migrate
-    ```
-
-1. Create Super User for Admin Page
-
-    ```sh
-    docker-compose run --rm fastapi poetry run python manage.py createsuperuser
-    ```
-
-1. Start Server
-
-    ```sh
-    docker-compose up
-    ```
-
-## alias for frequently used commands
+**Create Superuser:**
 
 ```sh
-source alias.sh
+docker-compose run --rm fastapi python manage.py createsuperuser
 ```
+
+**Make Migrations (if you change models):**
+
+```sh
+docker-compose run --rm fastapi python manage.py makemigrations
+```
+
+**Run Migrations manually:**
+
+```sh
+docker-compose run --rm fastapi python manage.py migrate
+```
+
+## Structure
+
+- `fastapi/`: Application code
+  - `app/`: FastAPI application and routers
+  - `config/`: Configuration settings (Django & FastAPI)
+  - `requirements.txt`: Python dependencies
+  - `Dockerfile`: Multi-stage Docker build
+- `docker-compose.yml`: Service orchestration
