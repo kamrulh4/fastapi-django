@@ -3,9 +3,9 @@ fastapi
 pydantic
 uvicorn[standard]
 whitenoise
-psycopg[binary]
+psycopg[c]
 gunicorn
-python-jose[cryptography]
+python-jose
 passlib[bcrypt]
 python-multipart
 Pillow

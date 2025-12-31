@@ -20,7 +20,7 @@ services:
     command: ./scripts/runlocalserver.sh
   postgres:
     container_name: fastapi-django-template-postgres
-    image: postgres:17-alpine
+    image: postgres:alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
